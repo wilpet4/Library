@@ -6,7 +6,7 @@ namespace Library.Csv
     public static class Csv
     {
         /// <summary>
-        /// Skapar en .csv fil utav den inskickade listan.
+        /// Creates a .csv file out of the passed in data.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="records"></param>
@@ -24,18 +24,18 @@ namespace Library.Csv
                 var properties = records.First().GetType().GetProperties();
                 for (int i = 0; i < properties.Length; i++)
                 {
-                    // Skriver namnen på alla properties som översta raden i dokumentet.
+                    // Writes the names of all properties as top row of document.
                     var value = properties[i].Name;
                     builder.Append($"{value}{listSeparator}");
                 }
 
                 foreach (var record in records)
                 {
-                    builder.AppendLine(); // Radbrytning
+                    builder.AppendLine(); // Line break.
 
                     foreach (var property in record.GetType().GetProperties())
                     {
-                        // Skriver alla värden från en record.
+                        // Writes all values from a record.
                         var value = property?.GetValue(record)?.ToString()?.Replace(listSeparator, "") ?? "";
                         builder.Append($"{value}{listSeparator}");
                     }
